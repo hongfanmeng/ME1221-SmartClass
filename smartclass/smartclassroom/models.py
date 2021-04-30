@@ -28,7 +28,6 @@ class Choice(models.Model):
 
     class Meta:
         unique_together = [
-            # no duplicated order per question
             ("question", "order")
         ]
         ordering = ("order",)
