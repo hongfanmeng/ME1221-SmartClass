@@ -1,5 +1,5 @@
 # ME1221-Smart Class
-This is the project of ME1221
+这是工程学导论的项目后端
 
 ## API list
 ### votes/
