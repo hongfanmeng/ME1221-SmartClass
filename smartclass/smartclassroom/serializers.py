@@ -8,31 +8,18 @@ class ChoiceGetSerializer(serializers.ModelSerializer):
         fields = ['order', 'voteCount']
 
 
-class ChoiceUpdateSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Choice
-        fields = ['id']
-        read_only_fields = ['voteCount']
-
-    def update(self, instance, validated_data):
-        instance.voteCount += 1
-        instance.save()
-        return instance
-
-
 class VoteSerializer(serializers.ModelSerializer):
-    choices = ChoiceGetSerializer(many=True, read_only=True)
-    choiceCount = serializers.IntegerField(write_only=True, max_value=6, min_value=1)
+    choicesCount = serializers.IntegerField(min_value=1, max_value=6)
 
     class Meta:
         model = Question
-        fields = ['title', 'id', 'created', 'choices', 'choiceCount']
+        fields = ['id', 'title', 'choicesCount']
 
     def create(self, validated_data):
-        choiceCount = validated_data.pop("choiceCount")
+        choiceCount = validated_data.get("choicesCount")
         question = Question.objects.create(**validated_data)
         for i in range(choiceCount):
-            Choice.objects.create(question=question, order=i, voteCount=0)
+            Choice.objects.create(question=question, order=i + 1, voteCount=0)
         return question
 
 
@@ -42,17 +29,17 @@ class VoteDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ['id', 'title', 'created', 'choices', 'order']
-        read_only_fields = ['id', 'title', 'created']
+        fields = ['id', 'title', 'choicesCount', 'choices', 'order', ]
+        read_only_fields = ['id', 'title', 'created', 'choicesCount']
 
     def validate(self, attrs):
         instance = self.instance
         order = attrs.get('order')
 
-        if 0 <= order < instance.choices.count():
+        if 1 <= order <= instance.choicesCount:
             return attrs
         raise serializers.ValidationError(
-            "order must from 0 to %d" % (instance.choices.count() - 1))
+            "order must between 1 and %d (the count of choices)" % instance.choicesCount)
 
     def update(self, instance, validated_data):
         order = validated_data.get('order')
@@ -66,4 +53,4 @@ class VoteDetailSerializer(serializers.ModelSerializer):
 class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model = Feedback
-        field = ['feedbackType, created']
+        fields = ['feedbackType', 'created']
