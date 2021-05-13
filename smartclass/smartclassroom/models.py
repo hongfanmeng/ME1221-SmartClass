@@ -1,8 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
-FEEDBACK_CHOICE = [('faster', 'faster'), ('slower', 'slower')]
+FEEDBACK_CHOICE = [('faster', 'faster'), ('slower', 'slower'),
+                   ('notClear', 'notClear'), ('notUnderstand', 'notUnderstand')]
 
 
 class Feedback(models.Model):
@@ -32,3 +34,8 @@ class Choice(models.Model):
             ("question", "order")
         ]
         ordering = ("order",)
+
+
+class UserVote(models.Model):
+    choice = models.ForeignKey(Choice, related_name="user_votes", on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
