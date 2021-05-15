@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from smartclass.smartclassroom.models import Feedback, Question, Choice, FEEDBACK_CHOICE
+from smartclass.smartclassroom.models import Feedback, Question, Choice
 
 
 class ChoiceGetSerializer(serializers.ModelSerializer):
