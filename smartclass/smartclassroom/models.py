@@ -27,7 +27,6 @@ class Question(models.Model):
 class Choice(models.Model):
     question = models.ForeignKey(Question, related_name="choices", on_delete=models.CASCADE)
     order = models.IntegerField()
-    voteCount = models.IntegerField()
 
     class Meta:
         unique_together = [
@@ -37,5 +36,5 @@ class Choice(models.Model):
 
 
 class UserVote(models.Model):
-    choice = models.ForeignKey(Choice, related_name="user_votes", on_delete=models.CASCADE)
+    choice = models.ForeignKey(Choice, related_name="userVotes", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

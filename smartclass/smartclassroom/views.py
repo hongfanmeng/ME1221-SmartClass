@@ -1,5 +1,6 @@
 from smartclass.smartclassroom.models import Question, Feedback
-from smartclass.smartclassroom.serializers import VoteSerializer, FeedbackSerializer, VoteDetailSerializer
+from smartclass.smartclassroom.serializers import VoteSerializer, FeedbackSerializer, \
+    VoteDetailSerializer, VoteStatusSerializer
 from smartclass.smartclassroom.permission import IsStudent, IsTeacher, IsTeacherOrReadOnly, IsStudentOrReadOnly
 from smartclass.smartclassroom.throttle import CreateFeedbackThrottle
 from rest_framework import generics
@@ -24,6 +25,11 @@ class VoteDetail(generics.RetrieveUpdateDestroyAPIView):
         if self.request.method == 'DELETE':
             return [IsAdminUser()]
         return [(IsStudentOrReadOnly | IsAdminUser)()]
+
+
+class VoteStatus(generics.RetrieveAPIView):
+    queryset = Question.objects.all()
+    serializer_class = VoteStatusSerializer
 
 
 class FeedbackList(generics.ListCreateAPIView):

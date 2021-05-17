@@ -17,6 +17,7 @@ urlpatterns = [
     path('api-token-auth/', views.AuthToken.as_view()),
     path('votes/', views.VoteList.as_view()),
     path('votes/<int:pk>/', views.VoteDetail.as_view()),
+    path('vote-status/<int:pk>', views.VoteStatus.as_view()),
     path('feedbacks/', views.FeedbackList.as_view())
 ]
 urlpatterns = format_suffix_patterns(urlpatterns)
