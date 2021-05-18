@@ -40,8 +40,8 @@
 
 ```json
 {
-    username:"student01",
-    password:"student01"
+    "username": "student01",
+    "password": "student01"
 }
 ```
 
