@@ -1,14 +1,16 @@
+from rest_framework.response import Response
+
 from .models import Attendance
 from .serializers import AttendanceSerializer, AttendanceDetailSerializer, AttendanceStatusSerializer
 from utils.permission import IsStudent, IsTeacher
 from rest_framework import generics
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 
 
 class AttendanceList(generics.ListCreateAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
-    permission_classes = [IsTeacher | IsAdminUser]
+    permission_classes = [IsAuthenticated]
 
 
 class AttendanceDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -20,7 +22,11 @@ class AttendanceDetail(generics.RetrieveUpdateDestroyAPIView):
             return [IsAdminUser()]
         elif self.request.method == 'PUT':
             return [IsStudent()]
-        return [(IsTeacher | IsAdminUser)()]
+        return [IsAuthenticated()]
+
+    def put(self, request, *args, **kwargs):
+        self.update(request, *args, **kwargs)
+        return Response({"success": True})
 
 
 class AttendanceStatus(generics.RetrieveAPIView):

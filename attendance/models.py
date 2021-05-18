@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 
 class Attendance(models.Model):
     title = models.CharField(max_length=100)
-    created = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
 
 
 class AttendanceRecord(models.Model):

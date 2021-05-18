@@ -4,15 +4,10 @@ from django.utils import timezone
 
 
 class AttendanceSerializer(serializers.ModelSerializer):
-    attendanceCount = serializers.SerializerMethodField()
-
     class Meta:
         model = Attendance
-        fields = ['id', 'title', 'created', 'attendanceCount']
-        read_only_fields = ['id', 'created', 'attendanceCount']
-
-    def get_attendanceCount(self, attendance):
-        return attendance.attendanceRecords.count()
+        fields = ['id', 'title', 'created']
+        read_only_fields = ['id', 'created']
 
 
 class AttendanceDetailSerializer(serializers.ModelSerializer):
