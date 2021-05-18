@@ -1,19 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-# Create your models here.
-
-FEEDBACK_CHOICE = [('faster', 'faster'), ('slower', 'slower'),
-                   ('notClear', 'notClear'), ('notUnderstand', 'notUnderstand')]
-
-
-class Feedback(models.Model):
-    created = models.DateTimeField(auto_now_add=True)
-    feedbackType = models.CharField(choices=FEEDBACK_CHOICE, max_length=20)
-
-    class Meta:
-        ordering = ('created',)
-
 
 class Question(models.Model):
     created = models.DateTimeField(auto_now_add=True)
@@ -22,6 +9,9 @@ class Question(models.Model):
 
     class Meta:
         ordering = ('created',)
+
+    def __str__(self):
+        return f"{self.id} : {self.title}"
 
 
 class Choice(models.Model):
@@ -34,7 +24,11 @@ class Choice(models.Model):
         ]
         ordering = ("order",)
 
+    def __str__(self):
+        return f"{self.question} - {self.order}"
 
-class UserVote(models.Model):
-    choice = models.ForeignKey(Choice, related_name="userVotes", on_delete=models.CASCADE)
+
+class VoteRecord(models.Model):
+    choice = models.ForeignKey(Choice, related_name="voteRecords", on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_created=True)

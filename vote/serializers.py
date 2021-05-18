@@ -1,12 +1,12 @@
 from rest_framework import serializers
-from smartclass.smartclassroom.models import Feedback, Question, Choice, UserVote
+from .models import Question, Choice, VoteRecord
 
 
 class ChoiceGetSerializer(serializers.ModelSerializer):
     voteCount = serializers.SerializerMethodField(read_only=True)
 
     def get_voteCount(self, choice):
-        return choice.userVotes.count()
+        return choice.voteRecords.count()
 
     class Meta:
         model = Choice
@@ -50,27 +50,21 @@ class VoteDetailSerializer(serializers.ModelSerializer):
         choices = instance.choices
         user = self.context.get('request').user
         for choice in choices.filter(order=order):
-            UserVote.objects.filter(user=user).delete()
-            UserVote.objects.create(choice=choice, user=user)
+            VoteRecord.objects.filter(user=user).delete()
+            VoteRecord.objects.create(choice=choice, user=user, created=timezone.now())
         return instance
 
 
 class VoteStatusSerializer(serializers.ModelSerializer):
-    hasVote = serializers.SerializerMethodField(read_only=True)
+    hasVoted = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Question
-        fields = ['hasVote']
+        fields = ['hasVoted']
 
-    def get_hasVote(self, question):
+    def get_hasVoted(self, question):
         user = self.context.get('request').user
         for choice in question.choices.all():
-            if choice.userVotes.all().filter(user=user).exists():
+            if choice.voteRecords.all().filter(user=user).exists():
                 return True
         return False
-
-
-class FeedbackSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Feedback
-        fields = ['feedbackType', 'created']
