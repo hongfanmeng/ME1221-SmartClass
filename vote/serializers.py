@@ -18,7 +18,7 @@ class VoteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ['id', 'title', 'choicesCount']
+        fields = ['id', 'title', 'choicesCount', 'created']
 
     def create(self, validated_data):
         choiceCount = validated_data.get("choicesCount")
@@ -34,8 +34,8 @@ class VoteDetailSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ['id', 'title', 'choicesCount', 'choices', 'order', ]
-        read_only_fields = ['id', 'title', 'choicesCount', 'choices', 'created']
+        fields = ['id', 'title', 'choicesCount', 'created', 'choices', 'order']
+        read_only_fields = ['id', 'title', 'choicesCount', 'created', 'choices']
 
     def validate(self, attrs):
         instance = self.instance

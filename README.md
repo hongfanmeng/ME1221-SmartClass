@@ -75,12 +75,14 @@ Authorization: Token 537410732a4317fb58f93bea97516e9e6c7a2fd4
     {
         "id": 1,
         "title": "1 + 1 = ?",
-        "choicesCount": 4
+        "choicesCount": 4,
+        "created": "2021-04-30T10:28:40.476611Z"
     },
     {
         "id": 2,
         "title": "3 + 1 = ?",
-        "choicesCount": 2
+        "choicesCount": 2,
+        "created": "2021-04-30T10:28:40.476611Z"
     },
 ]
 ```
@@ -94,7 +96,8 @@ Authorization: Token 537410732a4317fb58f93bea97516e9e6c7a2fd4
 ```json
 {
     "title" : "1 + 1 = ?",
-    "choicesCount" : 4
+    "choicesCount" : 4,
+    "created": "2021-04-30T10:28:40.476611Z"
 }
 ```
 
@@ -107,6 +110,7 @@ Authorization: Token 537410732a4317fb58f93bea97516e9e6c7a2fd4
     "id": 2,
     "title": "3 + 1 = ?",
     "choicesCount": 2,
+    "created": "2021-04-30T10:28:40.476611Z",
     "choices": [
         {
             "order": 1,
@@ -137,6 +141,7 @@ Authorization: Token 537410732a4317fb58f93bea97516e9e6c7a2fd4
     "id": 2,
     "title": "3 + 1 = ?",
     "choicesCount": 2,
+    "created": "2021-04-30T10:28:40.476611Z",
     "choices": [
         {
             "order": 1,
