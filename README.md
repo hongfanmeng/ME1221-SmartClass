@@ -1,11 +1,38 @@
 # ME1221-Smart Class
+
 这是工程学导论的项目后端
 
 # API list
 
+## 说明
+
+若进行无权限操作，会返回
+
+```json
+{
+    "detail": "You do not have permission to perform this action."
+}
+```
+
+若在要使用token的API中没有提交token ，则会返回
+
+```json
+{
+    "detail": "Authentication credentials were not provided."
+}
+```
+
+若提交的token错误，返回
+
+```json
+{
+    "detail": "Invalid token."
+}
+```
+
 ## api-token-auth/
 
-### POST
+### POST（公开功能）
 
 **Request**
 
@@ -31,31 +58,15 @@
 }
 ```
 
-**以下所有非读取API  及部分特别提到的API 需要在header 中加入**
+**以下所有老师或学生API 需要在header 中加入**
 
 ```
 Authorization: Token 537410732a4317fb58f93bea97516e9e6c7a2fd4
 ```
 
-若在要使用token的API中没有提交token ，则会返回
-
-```json
-{
-    "detail": "Authentication credentials were not provided."
-}
-```
-
-若提交的token错误，返回
-
-```json
-{
-    "detail": "Invalid token."
-}
-```
-
 ## votes/
 
-### GET
+### GET（公开功能）
 
 查询所有目前投票的简略情况，choicesCount为选项数量，title为投票标题，id 为投票对应编号
 
@@ -74,7 +85,7 @@ Authorization: Token 537410732a4317fb58f93bea97516e9e6c7a2fd4
 ]
 ```
 
-### POST
+### POST（老师功能）
 
 **Request**
 
@@ -111,15 +122,11 @@ Authorization: Token 537410732a4317fb58f93bea97516e9e6c7a2fd4
 
 此操作只有老师帐号有权限进行，若非老师帐户进行此操作，则返回
 
-```json
-{
-    "detail": "You do not have permission to perform this action."
-}
-```
+
 
 ## votes/\<int:id>/
 
-### GET
+### GET（公开功能）
 
 **Reponse**
 
@@ -143,7 +150,7 @@ Authorization: Token 537410732a4317fb58f93bea97516e9e6c7a2fd4
 }
 ```
 
-### PUT
+### PUT（学生功能）
 
 **Request**
 
@@ -177,11 +184,9 @@ Authorization: Token 537410732a4317fb58f93bea97516e9e6c7a2fd4
 }
 ```
 
-## vote-status/\<int:id>/
+## vote/\<int:id>/status
 
-**注︰此API需要使用token**
-
-### GET
+### GET（学生功能）
 
 **Response**
 
@@ -195,11 +200,11 @@ Authorization: Token 537410732a4317fb58f93bea97516e9e6c7a2fd4
 
 ## feedbacks/
 
-### GET
+### GET（公开功能）
 
 **Response**
 
-获得所有的课堂反馈，feedbackType为反馈类型，有faster(讲快一点)，slower(讲慢一点)，待加；created为反馈提交时间，可用于只显示最近反馈
+获得所有的课堂反馈，feedbackType为反馈类型，有faster(讲快一点)，slower(讲慢一点)，notUnderstand(听不懂)，notClear(没听清)；created为反馈提交时间，可用于只显示最近反馈
 
 ```json
 [
@@ -214,7 +219,7 @@ Authorization: Token 537410732a4317fb58f93bea97516e9e6c7a2fd4
 ]
 ```
 
-###  POST
+###  POST（学生功能）
 
 **Request**
 
@@ -246,4 +251,93 @@ Authorization: Token 537410732a4317fb58f93bea97516e9e6c7a2fd4
 ```
 
 
+
+## attendances/
+
+### POST（老师功能）
+
+**Request**
+
+创建一个新签到，标题为title
+
+```json
+{
+    "title": "Attendance 01"
+}
+```
+
+**Response**
+
+返回签到id，标题，创建时间。
+
+```json
+{
+    "id": 1,
+    "title": "Attendance 01",
+    "created": "2021-05-18T08:42:20.960497Z"
+}
+```
+
+### GET（公开功能）
+
+返回所有签到
+
+```json
+[
+    {
+    	"id": 1,
+    	"title": "Attendance 01",
+    	"created": "2021-05-18T08:42:20.960497Z"
+	}, 
+    {
+    	"id": 2,
+    	"title": "Attendance 02",
+    	"created": "2021-05-18T08:53:20.960497Z"
+	},
+]
+```
+
+## attendances/\<int:id>/
+
+### PUT（学生功能）
+
+**Reponse**
+
+进行签到
+
+```json
+{
+    "success": true
+}
+```
+
+### GET（老师功能）
+
+获取签到的详细内容，attendanceCount 为签到人数，users为签到用户的用户名
+
+```json
+{
+    "id": 1,
+    "title": "Attendance 01",
+    "created": "2021-05-18T08:42:20.960497Z",
+    "attendanceCount": 1,
+    "users": [
+        "student01"
+    ]
+}
+```
+
+
+
+## attendances/\<int:id>/status
+
+### GET（学生功能）
+
+查询是否已签到
+
+```json
+{
+    "hasChecked" : true
+}
+```
 
