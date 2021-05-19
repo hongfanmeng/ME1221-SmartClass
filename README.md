@@ -58,7 +58,7 @@
 }
 ```
 
-**以下所有老师或学生API 需要在header 中加入**
+**以下所有老师或学生API 需要在header 中加入(tokeno值根据获得token)**
 
 ```
 Authorization: Token 537410732a4317fb58f93bea97516e9e6c7a2fd4
