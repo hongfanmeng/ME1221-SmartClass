@@ -24,7 +24,10 @@ SECRET_KEY = '(&pwkvk#!wc=0b=3!7r#!t-98a7e81uavb!_35_catc=&3ju8@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'dorm.stevenh.ml',
+    'localhost'
+]
 
 # Application definition
 
@@ -41,6 +44,7 @@ INSTALLED_APPS = [
     'vote',
     'attendance',
     'utils',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -51,7 +55,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'smart_class.urls'
 

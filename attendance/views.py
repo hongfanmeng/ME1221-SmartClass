@@ -1,5 +1,4 @@
 from rest_framework.response import Response
-
 from .models import Attendance
 from .serializers import AttendanceSerializer, AttendanceDetailSerializer, AttendanceStatusSerializer
 from utils.permission import IsStudent, IsTeacher
