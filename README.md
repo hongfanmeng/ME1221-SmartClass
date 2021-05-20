@@ -96,8 +96,7 @@ Authorization: Token 537410732a4317fb58f93bea97516e9e6c7a2fd4
 ```json
 {
     "title" : "1 + 1 = ?",
-    "choicesCount" : 4,
-    "created": "2021-04-30T10:28:40.476611Z"
+    "choicesCount" : 4
 }
 ```
 
