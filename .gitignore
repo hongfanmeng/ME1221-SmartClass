@@ -29,3 +29,7 @@ pythonenv*
 
 # Django Migrations
 migrations/
+
+production/
+start_production.sh
+

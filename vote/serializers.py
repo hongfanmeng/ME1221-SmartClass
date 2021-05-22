@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Question, Choice, VoteRecord
+from django.utils import timezone
 
 
 class ChoiceGetSerializer(serializers.ModelSerializer):
