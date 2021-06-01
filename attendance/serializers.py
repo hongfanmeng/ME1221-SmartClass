@@ -27,7 +27,6 @@ class AttendanceDetailSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         user = self.context.get('request').user
-        AttendanceRecord.objects.filter(user=user).delete()
         AttendanceRecord.objects.create(user=user, attendance=instance, created=timezone.now())
         return instance
 

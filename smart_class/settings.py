@@ -25,9 +25,39 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '(&pwkvk#!wc=0b=3!7r#!t-98a7e81
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-SECURE_SSL_REDIRECT = True
+# SECURE_SSL_REDIRECT = True
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'production/static')
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'debug': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': './log/debug.log',
+        },
+        'warn': {
+            'level': 'WARN',
+            'class': 'logging.FileHandler',
+            'filename': './log/warn.log',
+        },
+        'info': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': './log/info.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['debug','warn','info'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
 
 ALLOWED_HOSTS = [
     'dorm.stevenh.ml',

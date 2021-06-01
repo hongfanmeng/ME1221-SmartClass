@@ -51,7 +51,7 @@ class VoteDetailSerializer(serializers.ModelSerializer):
         choices = instance.choices
         user = self.context.get('request').user
         for choice in choices.filter(order=order):
-            VoteRecord.objects.filter(user=user).delete()
+            VoteRecord.objects.filter(user=user).filter(choice=choice).delete()
             VoteRecord.objects.create(choice=choice, user=user, created=timezone.now())
         return instance
 

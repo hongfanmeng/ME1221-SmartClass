@@ -11,7 +11,7 @@ urlpatterns = [
     path('api-token-auth/', AuthToken.as_view()),
     path('votes/', VoteList.as_view()),
     path('votes/<int:pk>/', VoteDetail.as_view()),
-    path('votes/<int:pk>/status', VoteStatus.as_view()),
+    path('votes/<int:pk>/status/', VoteStatus.as_view()),
     path('attendances/', AttendanceList.as_view()),
     path('attendances/<int:pk>/', AttendanceDetail.as_view()),
     path('attendances/<int:pk>/status/', AttendanceStatus.as_view()),
